@@ -1,0 +1,14 @@
+[%
+import "columnFamilyDataModel2cassandraHelpers.eol";
+
+for (t in columnFamilyDataModel!Table){ %]
+  CREATE TABLE [%=t.name%] (
+  [% for (co in t.columns) { %]
+    [%=co.name%] [%=co.getType()%],
+  [% } %]
+    PRIMARY KEY([%=t.formatPartitionKeys()%][%=t.formatClusteringKeys()%])
+  );
+
+[%
+}
+%]

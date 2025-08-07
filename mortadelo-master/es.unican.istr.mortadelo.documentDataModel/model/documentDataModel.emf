@@ -1,0 +1,42 @@
+@namespace(uri="http://documentDataModel.mortadelo.istr.unican.es",
+    prefix="documentDataModel")
+package documentDataModel;
+
+class DocumentDataModel {
+  val Collection[*] collections;
+}
+
+class Collection {
+  attr String[1] name;
+  val Document[1] root;
+  val Index[*] indexes;
+}
+
+abstract class Field {
+  attr String[1] name;
+}
+
+class Index {
+  attr String[1] name;
+  ref Field[+] fields;
+}
+
+class Document extends Field {
+  val Field[*] fields;
+}
+
+class PrimitiveField extends Field {
+  attr PrimitiveType[1] type;
+}
+
+class ArrayField extends Field {
+  val Field[1] type;
+}
+
+enum PrimitiveType {
+  INT; FLOAT;
+  TEXT;
+  DATE; TIMESTAMP;
+  BOOLEAN;
+  ID;
+}
